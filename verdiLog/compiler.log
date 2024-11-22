@@ -1,0 +1,234 @@
+*design* DebussyLib (btIdent Verdi_O-2018.09-SP2)
+Command arguments:
+    +define+verilog
+    -f vfile.f
+        ./tb.v
+        ./UART_RX.v
+        ./top.v
+        ./UART_TX.v
+        ./clkgen.v
+        ./UART.v
+
+
+*Error* Syntax error at logic
+"./top.v", 73: 
+
+*Error* Syntax error at ,
+"./top.v", 74: 
+
+*Error* Syntax error at ,
+"./top.v", 75: 
+
+*Error* Syntax error at }
+"./top.v", 77: 
+
+*Error* Syntax error at ,
+"./top.v", 79: 
+
+*Error* Syntax error at logic
+"./top.v", 180: 
+
+*Error* Syntax error at =
+"./top.v", 181: 
+
+*Error* Syntax error at =
+"./top.v", 182: 
+
+*Error* Syntax error at =
+"./top.v", 183: 
+
+*Error* Syntax error at =
+"./top.v", 184: 
+
+*Error* Syntax error at =
+"./top.v", 185: 
+
+*Error* Syntax error at }
+"./top.v", 187: 
+
+*Error* Syntax error at ,
+"./top.v", 189: 
+Highest level modules:
+tb
+
+
+*Error* failed to find identifier r_state
+"./top.v", 83: 
+
+*Error* failed to find identifier R_IDLE
+"./top.v", 83: 
+
+*Error* failed to find identifier r_state
+"./top.v", 85: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 85: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 92: 
+
+*Error* failed to find identifier r_state
+"./top.v", 92: 
+
+*Error* failed to find identifier r_state
+"./top.v", 94: 
+
+*Error* failed to find identifier R_IDLE
+"./top.v", 95: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 98: 
+
+*Error* failed to find identifier R_READ_DATA
+"./top.v", 98: 
+
+*Error* failed to find identifier R_READ_DATA
+"./top.v", 102: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 106: 
+
+*Error* failed to find identifier R_READ_DATA
+"./top.v", 106: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 109: 
+
+*Error* failed to find identifier R_IDLE
+"./top.v", 109: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 112: 
+
+*Error* failed to find identifier R_WAIT_READY
+"./top.v", 112: 
+
+*Error* failed to find identifier R_WAIT_READY
+"./top.v", 114: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 118: 
+
+*Error* failed to find identifier R_READ_DATA
+"./top.v", 118: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 121: 
+
+*Error* failed to find identifier R_IDLE
+"./top.v", 121: 
+
+*Error* failed to find identifier r_next_state
+"./top.v", 134: 
+
+*Error* failed to find identifier R_IDLE
+"./top.v", 135: 
+
+*Error* failed to find identifier R_READ_DATA
+"./top.v", 140: 
+
+*Error* failed to find identifier R_WAIT_READY
+"./top.v", 155: 
+
+*Error* failed to find identifier w_state
+"./top.v", 194: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 194: 
+
+*Error* failed to find identifier w_state
+"./top.v", 196: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 196: 
+
+*Error* failed to find identifier w_state
+"./top.v", 202: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 203: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 205: 
+
+*Error* failed to find identifier W_WRITE
+"./top.v", 205: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 216: 
+
+*Error* failed to find identifier W_WAIT_DATA
+"./top.v", 216: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 221: 
+
+*Error* failed to find identifier W_WAIT_ADDR
+"./top.v", 221: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 226: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 226: 
+
+*Error* failed to find identifier W_WAIT_ADDR
+"./top.v", 232: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 234: 
+
+*Error* failed to find identifier W_WRITE
+"./top.v", 234: 
+
+*Error* failed to find identifier W_WAIT_DATA
+"./top.v", 241: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 243: 
+
+*Error* failed to find identifier W_WRITE
+"./top.v", 243: 
+
+*Error* failed to find identifier W_WRITE
+"./top.v", 254: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 256: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 256: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 258: 
+
+*Error* failed to find identifier W_WAIT_RESP_READY
+"./top.v", 258: 
+
+*Error* failed to find identifier W_WAIT_RESP_READY
+"./top.v", 261: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 263: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 263: 
+
+*Error* failed to find identifier w_next_state
+"./top.v", 276: 
+
+*Error* failed to find identifier W_IDLE
+"./top.v", 277: 
+
+*Error* failed to find identifier W_WAIT_ADDR
+"./top.v", 281: 
+
+*Error* failed to find identifier W_WAIT_DATA
+"./top.v", 281: 
+
+*Error* failed to find identifier W_WRITE
+"./top.v", 285: 
+
+*Error* failed to find identifier W_WAIT_RESP_READY
+"./top.v", 300: 
+Total	73 error(s),   0 warning(s)

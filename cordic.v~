@@ -1,0 +1,81 @@
+module cordic(
+   input signed [31:0] x_in,
+   input signed [31:0] y_in,
+   input signed [31:0] z_in,
+   input valid,
+   output signed [31:0] x_out,
+   output signed [31:0] y_out,
+   output signed [31:0] z_out,
+   input  [3:0]  i_start
+);
+
+//look up table
+wire signed [31:0] atan_table [0:15];
+assign atan_table[0]   =  32'd377487360;   //45 * 2^23		
+assign atan_table[1]   =  32'd222843371;   //26.525 * 2^23	
+assign atan_table[2]   =  32'd117742502;   //14.036 * 2^23
+assign atan_table[3]   =  32'd59768832;    //7.125 * 2^23
+assign atan_table[4]   =  32'd30000179;    //3.5763 * 2^23   
+assign atan_table[5]   =  32'd15014769;    //1.7899 * 2^23 
+assign atan_table[6]   =  32'd7508643;     //0.8951 * 2^23  
+assign atan_table[7]   =  32'd3754741;     //0.4476 * 2^23   
+assign atan_table[8]   =  32'd1877370;     //0.2238 * 2^23  
+assign atan_table[9]   =  32'd938685;      //0.1119 * 2^23
+assign atan_table[10]  =  32'd468923;      //0.0559 * 2^23
+assign atan_table[11]  =  32'd234042;	   //0.0279 * 2^23 
+assign atan_table[12]  =  32'd116602;      //0.0139 * 2^23 
+assign atan_table[13]  =  32'd57881;       //0.0069 * 2^23 
+assign atan_table[14]  =  32'd29360;       //0.0035 * 2^23 
+assign atan_table[15]  =  32'd14261;       //0.0017 * 2^23
+
+parameter K = 32'd5094007;   //0.607252935 * 2^23
+  
+
+//pre rotate
+
+//loop
+wire signed [31:0] x [0:4];
+wire signed [31:0] y [0:4];
+wire signed [31:0] z [0:4];
+
+assign x[0] = x_in;
+assign y[0] = y_in;
+assign z[0] = z_in;
+assign x_out = valid ? x[4] : 0;
+assign y_out = valid ? y[4] : 0;
+assign z_out = valid ? z[4] : 0;
+
+
+genvar i;
+generate
+  for(i=0;i<4;i=i+1)
+   begin
+      
+      assign x[i+1] = (z[i]>0) ? (x[i] - (y[i] >>> (i+i_start))) : (x[i] + (y[i] >>> (i+i_start)));
+      assign y[i+1] = (z[i]>0) ? (y[i] + (x[i] >>> (i+i_start))) : (y[i] - (x[i] >>> (i+i_start)));
+      assign z[i+1] = (z[i]>0) ? (z[i] - atan_table[i+i_start]) : (z[i] + atan_table[i+i_start]);
+   
+   end
+endgenerate
+
+endmodule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,219 @@
+module pipeline(
+  input clk,
+  input signed [31:0] angle,
+  input is_cos,
+  input angle_valid,
+  output result_valid,
+  output signed [31:0] result,
+  input rst
+  
+);
+
+
+reg signed [31:0] x_start;
+reg signed [31:0] y_start;
+reg signed [31:0] z_start;
+
+
+wire signed [31:0] x_0_out;
+wire signed [31:0] x_1_out;
+wire signed [31:0] x_2_out;
+wire signed [31:0] x_3_out;
+wire signed [31:0] x_0_in;
+wire signed [31:0] x_1_in;
+wire signed [31:0] x_2_in;
+wire signed [31:0] x_3_in;
+wire signed [31:0] y_0_out;
+wire signed [31:0] y_1_out;
+wire signed [31:0] y_2_out;
+wire signed [31:0] y_3_out;
+wire signed [31:0] y_0_in;
+wire signed [31:0] y_1_in;
+wire signed [31:0] y_2_in;
+wire signed [31:0] y_3_in;
+wire signed [31:0] z_0_out;
+wire signed [31:0] z_1_out;
+wire signed [31:0] z_2_out;
+wire signed [31:0] z_3_out;
+wire signed [31:0] z_0_in;
+wire signed [31:0] z_1_in;
+wire signed [31:0] z_2_in;
+wire signed [31:0] z_3_in;
+
+reg valid0;
+reg valid1;
+reg valid2;
+reg valid3;
+
+reg signed [31:0] reg_x0;
+reg signed [31:0] reg_x1;
+reg signed [31:0] reg_x2;
+//reg signed [31:0] reg_x3;
+reg signed [31:0] reg_y0;
+reg signed [31:0] reg_y1;
+reg signed [31:0] reg_y2;
+//reg signed [31:0] reg_y3;
+reg signed [31:0] reg_z0;
+reg signed [31:0] reg_z1;
+reg signed [31:0] reg_z2;
+//reg signed [31:0] reg_z3;
+
+assign x_0_in = x_start;
+assign y_0_in = y_start;
+assign z_0_in = z_start;
+assign x_1_in = reg_x0;
+assign y_1_in = reg_y0;
+assign z_1_in = reg_z0;
+assign x_2_in = reg_x1;
+assign y_2_in = reg_y1;
+assign z_2_in = reg_z1;
+assign x_3_in = reg_x2;
+assign y_3_in = reg_y2;
+assign z_3_in = reg_z2;
+
+parameter K = 32'd5094007;   //0.607252935 * 2^23 
+
+
+parameter first_fourth_quadrant = 2'b00;
+parameter second_quadrant = 2'b01;
+parameter third_quadrant = 2'b10;
+//parameter fourth_quadrant = 2'b11;
+
+reg [2:0] quadrant0;
+reg [2:0] quadrant1;
+reg [2:0] quadrant2;
+reg [2:0] quadrant3;
+
+assign result_valid = valid3;
+reg signed [31:0] itr_result;
+
+
+always@(posedge clk or posedge rst)
+begin
+  if(!rst)
+  begin
+    valid0 <= 0;
+    valid1 <= 0;
+    valid2 <= 0;
+    valid3 <= 0;
+    x_start <= 0;
+    y_start <= 0;
+    z_start <= 0;
+    reg_x0  <= 0;
+    reg_y0  <= 0;
+    reg_z0  <= 0;
+    reg_x1  <= 0;
+    reg_y1  <= 0;
+    reg_z1  <= 0;
+    reg_x2  <= 0;
+    reg_y2  <= 0;
+    reg_z2  <= 0;
+  end
+  
+  else   //move forward
+  begin
+    if(angle_valid)
+    begin
+      valid0 <= 1;
+      x_start <= K;
+      y_start <= 0;
+      //pre rotate
+      if((angle > (32'd90<<23)) & ((angle <= (32'd180<<23))))       
+      begin
+         quadrant0 <= second_quadrant;
+         z_start <= angle - (32'd90<<23);
+      end
+      else if((angle >= (-32'd180<<23)) & ((angle < (-32'd90<<23))))
+      begin
+         quadrant0 <= third_quadrant;
+         z_start <= angle + (32'd90<<23);
+      end
+      else
+      begin
+         quadrant0 <= first_fourth_quadrant;
+         z_start <= angle;
+      end
+    end
+    else
+    begin
+      valid0 <= 0;
+      x_start <= 0;
+      y_start <= 0;
+      z_start <= 0;
+    end
+     quadrant3 <= quadrant2;
+     quadrant2 <= quadrant1;
+     quadrant1 <= quadrant0;
+     valid3 <= valid2;
+     valid2 <= valid1;
+     valid1 <= valid0;
+     reg_x2 <= x_2_out;
+     reg_x1 <= x_1_out;
+     reg_x0 <= x_0_out;
+     reg_y2 <= y_2_out;
+     reg_y1 <= y_1_out;
+     reg_y0 <= y_0_out;
+     reg_z2 <= z_2_out;
+     reg_z1 <= z_1_out;
+     reg_z0 <= z_0_out;
+  end
+end
+
+//Phase information restoration
+always@(*)
+begin
+   if(valid3)
+   begin
+      if(quadrant3 == first_fourth_quadrant)
+         itr_result = is_cos ? x_3_out : y_3_out;
+      else if(quadrant3 == second_quadrant)
+         itr_result = is_cos ? -y_3_out : x_3_out;
+      else if(quadrant3 == third_quadrant)
+         itr_result = is_cos ? y_3_out : -x_3_out;   
+   end
+end
+assign result = itr_result;
+cordic cordic0(
+  .x_in(x_0_in),
+  .x_out(x_0_out),
+  .y_in(y_0_in),
+  .y_out(y_0_out),
+  .z_in(z_0_in),
+  .z_out(z_0_out),
+  .i_start(4'd0),
+  .valid(valid0)
+);
+
+cordic cordic1(
+  .x_in(x_1_in),
+  .x_out(x_1_out),
+  .y_in(y_1_in),
+  .y_out(y_1_out),
+  .z_in(z_1_in),
+  .z_out(z_1_out),
+  .i_start(4'd4),
+  .valid(valid1)
+);
+
+cordic cordic2(
+  .x_in(x_2_in),
+  .x_out(x_2_out),
+  .y_in(y_2_in),
+  .y_out(y_2_out),
+  .z_in(z_2_in),
+  .z_out(z_2_out),
+  .i_start(4'd8),
+  .valid(valid2)
+);
+
+cordic cordic3(
+  .x_in(x_3_in),
+  .x_out(x_3_out),
+  .y_in(y_3_in),
+  .y_out(y_3_out),
+  .z_in(z_3_in),
+  .z_out(z_3_out),
+  .i_start(4'd12),
+  .valid(valid3)
+);
+endmodule

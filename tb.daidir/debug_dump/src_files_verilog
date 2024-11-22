@@ -1,0 +1,6 @@
+/export4/Home/iac02/daisiyao/uart2axi/UART.v
+/export4/Home/iac02/daisiyao/uart2axi/UART_RX.v
+/export4/Home/iac02/daisiyao/uart2axi/UART_TX.v
+/export4/Home/iac02/daisiyao/uart2axi/clkgen.v
+/export4/Home/iac02/daisiyao/uart2axi/tb.v
+/export4/Home/iac02/daisiyao/uart2axi/top.v

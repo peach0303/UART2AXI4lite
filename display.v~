@@ -1,0 +1,105 @@
+module display(
+  input clk,
+  input rst,
+  input signed [31:0] input_num,
+  output lcd_en, // LED enable
+  output lcd_rs, // register select
+                 // 0 : write command register
+                 // 1 : write data register
+  output lcd_rw, // Read/Write Signal
+                        // 0 : write
+                        // 1 : No function
+  output reg [7:0] lcd_db,
+  output lcd_rst 
+);
+
+
+parameter ASCII_0 = 8'h10;
+wire sign;
+wire [31:0] fix_point_num;
+reg  int_field = 0;
+reg [3:0] num0;
+reg [3:0] num1;
+reg [3:0] num2;
+reg [3:0] num3;
+reg [3:0] num4;
+
+assign sign = fix_point_num[31];
+assign fix_point_num = sign ? ~(input_num-1) : input_num;
+always@(*)
+begin
+   num0 = fix_point_num[22:19];
+   num1 = fix_point_num[18:15];
+   num2 = fix_point_num[14:11];
+   num3 = fix_point_num[10:7];
+   num4 = fix_point_num[6:3];
+   if(num4 >= 4'd5)
+     num3 = num3 + 1;
+   if(num3 >= 4'd10)
+   begin
+     num2 = num2 + 4'd1;
+     num3 = num3 - 4'd10;
+   end
+   if(num2 >= 4'd10)
+   begin
+     num1 = num1 + 4'd1;
+     num2 = num2 - 4'd10;
+   end
+   if(num1 >= 4'd10)
+   begin
+     num0 = num0 + 4'd1;
+     num1 = num1 - 4'd10;
+   end
+   if(num0 >= 4'd10)
+   begin
+     int_field = 1;
+     num0 = num0 - 4'd10;
+   end
+   else
+     int_field = 0;
+end
+
+reg  [7:0] tmp1;
+reg  [5:0] cnt_lcd; 
+
+// ------------
+// Text LCD Main Circuit
+// ------------
+
+assign lcd_rw = 1'b0;
+assign lcd_rs = 1'b1;
+assign lcd_rst = rst;
+assign lcd_en = cnt_lcd[0];
+
+always @(posedge clk or posedge rst)
+   if (rst) lcd_db <= 0;
+   else if (lcd_en) lcd_db <= tmp1;
+   else lcd_db <= 0;
+       
+always @(posedge clk or posedge rst)
+   if (rst) cnt_lcd <= 0;
+   else  cnt_lcd <= cnt_lcd + 1;
+      
+
+always @(cnt_lcd)
+   case(cnt_lcd[5:1])
+   'h0 : tmp1 = 'h00; // *
+   'h1 : tmp1 = 'h00; // *
+   'h2 : tmp1 = 'h00; // *
+   'h3 : tmp1 = sign ? 'hd : 0; // - or space
+   'h4 : tmp1 = ASCII_0 + int_field; // 
+   'h5 : tmp1 = 'he; //.
+   'h6 : tmp1 = ASCII_0 + num0; // 
+   'h7 : tmp1 = ASCII_0 + num1; // 
+   'h8 : tmp1 = ASCII_0 + num2; // 
+   'h9 : tmp1 = ASCII_0 + num3; //
+   'hA : tmp1 = 'h00; // 
+   'hB : tmp1 = 'h00; // 
+   'hC : tmp1 = 'h00; // 
+   'hD : tmp1 = 'h00; // 
+   'hE : tmp1 = 'h00; // 
+   'hF : tmp1 = 'h00; //  
+   default : tmp1 = 'h00;
+   endcase
+             
+endmodule

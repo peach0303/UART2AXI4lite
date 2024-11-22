@@ -1,0 +1,111 @@
+Magic 271485
+Revision Verdi_O-2018.09-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 27 1920 649 199 61
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/export4/Home/iac02/daisiyao/uart2axi/*.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 3168944906.644638 3169132362.429479
+cursor 3168975000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 9
+; marker line index
+markerPos 20
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/export4/Home/iac02/daisiyao/uart2axi/*.fsdb"
+addSignal -h 15 /tb/clk
+addSignal -h 15 -holdScope rst_n
+addSignal -h 15 -holdScope s_axi_awaddr[31:0]
+addSignal -h 15 -holdScope s_axi_awready
+addSignal -h 15 -holdScope s_axi_awvalid
+addSubGroup "G2"
+addSignal -h 15 /tb/s_axi_wdata[31:0]
+addSignal -h 15 -holdScope s_axi_wready
+addSignal -h 15 -holdScope s_axi_wstrb[3:0]
+addSignal -h 15 -holdScope s_axi_wvalid
+addSignal -h 15 /tb/uut/UART_FIFO_CTRL[31:0]
+addSignal -h 15 -holdScope uart_clk
+addSignal -h 15 -holdScope uart_tx
+addSignal -h 15 /tb/s_axi_araddr[31:0]
+addSignal -h 15 -holdScope s_axi_arready
+addSignal -h 15 -holdScope s_axi_arvalid
+addSignal -h 15 -UNSIGNED -UDEC -holdScope s_axi_rdata[31:0]
+addSignal -h 15 -holdScope s_axi_rready
+addSignal -h 15 -holdScope s_axi_rresp[1:0]
+addSignal -h 15 -holdScope s_axi_rvalid
+addSubGroup "G2"
+addSignal -h 15 /tb/s_axi_bready
+addSignal -h 15 -holdScope s_axi_bresp[1:0]
+addSignal -h 15 -holdScope s_axi_bvalid
+addSubGroup "G2"
+endSubGroup "G2"
+addSignal -h 15 /tb/s_axi_rready
+addSignal -h 15 -holdScope s_axi_rresp[1:0]
+addSignal -h 15 -holdScope s_axi_rvalid
+endSubGroup "G2"
+addSignal -h 15 -UNSIGNED -UDEC /tb/uut/UART1/TFIFO[0:3]
+addSignal -h 15 -holdScope tx_head[1:0]
+addSignal -h 15 -holdScope tx_tail[1:0]
+addSignal -h 15 -UNSIGNED /tb/uut/w_next_state[2:0]
+addSignal -h 15 -UNSIGNED -holdScope w_state[2:0]
+addSignal -h 15 /tb/s_axi_araddr[31:0]
+addSignal -h 15 -holdScope s_axi_arready
+addSignal -h 15 -holdScope s_axi_arvalid
+endSubGroup "G2"
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/export4/Home/iac02/daisiyao/uart2axi/*.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/tb"
+"/tb/uut"
+"/tb/uut/UART1"
+
+SCOPE_LIST_BEGIN
+"/tb"
+"/tb/uut"
+"/tb/uut/UART1"
+"/tb/clkgen1"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

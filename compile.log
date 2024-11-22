@@ -1,0 +1,65 @@
+Command: vcs -f vfile.f -timescale=1ns/1ps +define+DUMP -fsdb -R -full64 +vc +v2k \
+-sverilog -debug_acc+all -debug_region+cell+encrypt -o tb -l compile.log
+
+Warning-[DEBUG_DEP] Option will be deprecated
+  The option '-fsdb' will be deprecated in a future release.  Please use 
+  '-debug_acc+dmptf -debug_region+cell+encrypt' instead.
+
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Tue Nov 19 00:17:30 2024
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file './tb.v'
+Parsing design file './UART_RX.v'
+Parsing design file './top.v'
+Parsing design file './UART_TX.v'
+Parsing design file './clkgen.v'
+Parsing design file './UART.v'
+Top Level Modules:
+       tb
+TimeScale is 1 ns / 1 ps
+Notice: Ports coerced to inout, use -notice for details
+Starting vcs inline pass...
+1 module and 0 UDP read.
+recompiling module tb
+make[1]: Entering directory `/export4/Home/iac02/daisiyao/uart2axi/csrc'
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../tb ]; then chmod -x ../tb; fi
+g++  -o ../tb    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/tb.daidir/ -Wl,-rpath=./tb.daidir/ \
+-Wl,-rpath='$ORIGIN'/tb.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/export/Apps/Synopsys/vcs/O-2018.09-SP2-2/linux64/lib \
+-L/export/Apps/Synopsys/vcs/O-2018.09-SP2-2/linux64/lib   objs/amcQw_d.o   _202316_archive_1.so \
+SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o \
+-lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile \
+-luclinative /export/Apps/Synopsys/vcs/O-2018.09-SP2-2/linux64/lib/vcs_tls.o   -Wl,-whole-archive \
+-lvcsucli -Wl,-no-whole-archive        _vcs_pli_stub_.o   /export/Apps/Synopsys/vcs/O-2018.09-SP2-2/linux64/lib/vcs_save_restore_new.o \
+/export/Apps/Synopsys/verdi/Verdi_O-2018.09-SP2/share/PLI/VCS/LINUX64/pli.a -ldl \
+-lc -lm -lpthread -ldl 
+../tb up to date
+make[1]: Leaving directory `/export4/Home/iac02/daisiyao/uart2axi/csrc'
+Command: /export4/Home/iac02/daisiyao/uart2axi/./tb +define+DUMP +vc +v2k -a compile.log
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Nov 19 00:17 2024
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2, Linux x86_64/64bit, 02/21/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file '*.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : End of traversing.
+*Verdi* : Begin traversing the MDAs, layer (0).
+*Verdi* : Enable +mda and +packedmda dumping.
+*Verdi* : End of traversing the MDAs.
+finish vcs simulation
+$finish called from file "./tb.v", line 270.
+$finish at simulation time          19169453000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 19169453000 ps
+CPU Time:      2.190 seconds;       Data structure size:   0.0Mb
+Tue Nov 19 00:17:36 2024
+CPU time: .760 seconds to compile + .571 seconds to elab + .374 seconds to link + 2.239 seconds in simulation

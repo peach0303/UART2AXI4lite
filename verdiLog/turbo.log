@@ -1,0 +1,4 @@
+Command Line: /export/Apps/Synopsys/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/Novas -f vfile.f -ssf *.fsdb
+uname(Linux inspur19 2.6.32-754.35.1.el6.x86_64 #1 SMP Sat Nov 7 12:42:14 UTC 2020 x86_64)
+Disabled AskUser2 Message (Response 0): Close all windows and exit verdi?
+au time 85448.321986 737.443891 771.159766 delta 2086137856 2086137856 total 2505682944 2505682944
